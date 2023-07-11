@@ -1,0 +1,9 @@
+timezone: Asia/Kolkata
+
+locales:
+  - en_US.UTF-8
+
+hostname: sumit-ubuntu
+
+user: sumit
+

@@ -1,0 +1,33 @@
+---
+# Installs [Starship](https://starship.rs/) prompt
+- name: Check if HomeBrew is installed
+  ansible.builtin.stat:
+    path: /home/linuxbrew/.linuxbrew/bin/brew
+  register: brew
+
+- name: Download & Install HomeBrew
+  block:
+    - name: Download Installer Script
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+        dest: /tmp/brew_install.sh
+        mode: '775'
+    - name: Run Installer Script
+      ansible.builtin.shell: NONINTERACTIVE=1 /tmp/brew_install.sh 
+    - name: Add to Bash Shell
+      block:
+        - name: Add to .profile
+          ansible.builtin.shell: "(echo; echo 'eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"') >> /home/{{ user }}/.profile"
+        - name: Add to .bashrc
+          ansible.builtin.shell: "(echo; echo 'eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"') >> /home/{{ user }}/.bashrc"
+        - name: Add to current session
+          ansible.builtin.shell: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    - name: Add to Fish Shell
+      block:
+        - name: Add to fish.config
+          ansible.builtin.shell: "echo 'eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/{{ user }}/.config/fish/config.fish"
+  when: not brew.stat.exists
+
+- name: Set LinuxBrew Executable Path
+  ansible.builtin.set_fact:
+    linuxbrew_executable: /home/linuxbrew/.linuxbrew/bin/brew

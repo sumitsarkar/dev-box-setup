@@ -1,0 +1,26 @@
+packages:
+  core:
+    - git
+    - stow
+    - fish
+
+  system:
+    - wget
+    - curl
+    - fuse
+    - jq
+    - libfuse2
+    - zip
+    - unzip
+    - unrar
+
+
+  desktop:
+    # Audio and video
+    - vlc
+
+  fonts:
+    - fonts-powerline
+
+  virtualization:
+    - podman

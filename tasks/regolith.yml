@@ -1,0 +1,22 @@
+---
+- name: regolith ~> configure apt-repository for {{ ansible_distribution }} {{ ansible_distribution_release }}
+  become: true
+  block:
+    - name: Regolith |no apt key
+      ansible.builtin.get_url:
+        url: https://regolith-desktop.org/regolith.key
+        dest: /usr/share/keyrings/regolith-archive-keyring.asc
+
+    - name: Regolith | apt source
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.asc] https://regolith-desktop.org/release-ubuntu-jammy-amd64 jammy main"
+        state: present
+
+- name: Regolith ~> installing
+  become: true
+  ansible.builtin.apt:
+    name:
+      - regolith-desktop
+      - regolith-compositor-picom-glx
+      - regolith-look-blackhole
+    state: present

@@ -1,0 +1,39 @@
+---
+- name: Upgrade system packages
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: Install core packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: no
+  loop: "{{ packages.core }}"
+
+- name: Install system packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: no
+  loop: "{{ packages.system }}"
+
+- name: Install desktop packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: no
+  loop: "{{ packages.desktop }}"
+
+- name: Install fonts packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: no
+  loop: "{{ packages.fonts }}"
+

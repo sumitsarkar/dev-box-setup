@@ -1,0 +1,12 @@
+---
+- name: Install VS Code
+  ansible.builtin.include_role:
+    name: gantsign.visual-studio-code
+
+- name: Install virtualization packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: no
+  loop: "{{ packages.virtualization }}"

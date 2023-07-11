@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+
+  vars_files:
+    - vars/packages.yml
+    - vars/common.yml
+
+  tasks:
+    - import_tasks: tasks/packages.yml
+    - import_tasks: tasks/fonts.yml
+    - import_tasks: tasks/brew.yml
+    - import_tasks: tasks/shell.yml
+    - import_tasks: tasks/regolith.yml
+    - import_tasks: tasks/chrome.yml
+    - import_tasks: tasks/programming.yml
