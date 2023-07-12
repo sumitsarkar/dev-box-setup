@@ -5,23 +5,17 @@
     path: /home/{{ user }}/.config/starship.toml
   register: starship
 
-- name: Install & Set up Starship
+- name: Install
   when: not starship.stat.exists
-  block:
-    - name: Install Starship
-      ansible.builtin.shell: "{{ linuxbrew_executable }} install starship"
-      environment: 
-        HOME: "/home/{{ user }}"
-      args:
-        executable: /bin/bash
-    - name: Set Bash
-      block:
-        - name: Add to .profile
-          ansible.builtin.shell: "(echo; echo 'eval \"$(starship init bash)\"') >> /home/{{ user }}/.profile"
-        - name: Add to .bashrc
-          ansible.builtin.shell: "(echo; echo 'eval \"$(starship init bash)\"') >> /home/{{ user }}/.bashrc"
-    - name: Add to Fish Shell
-      block:
-        - name: Add to fish.config
-          ansible.builtin.shell: "echo 'starship init fish | source' >> /home/{{ user }}/.config/fish/config.fish"
-      
+  ansible.builtin.command: "{{ linuxbrew_executable }} install starship"
+  environment: 
+    HOME: "/home/{{ user }}"
+  args:
+    executable: /bin/bash
+- name: Install Fisher
+  ansible.builtin.shell: curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+  environment:
+    HOME:  "/home/{{ user }}"
+  args:
+    executable: /bin/fish
+
