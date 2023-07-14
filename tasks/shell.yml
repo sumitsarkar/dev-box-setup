@@ -20,24 +20,3 @@
     HOME:  "/home/{{ user }}"
   args:
     executable: /bin/fish
-
-# Installing [Chezmoi](https://www.chezmoi.io/)
-# - name: Install & Initialize Chezmoi
-#   block:
-#     - name: Install Chezmoi
-#       ansible.builtin.command: "{{ linuxbrew_executable }} install chezmoi"
-#       environment: 
-#         HOME: "/home/{{ user }}"
-#       args:
-#         executable: /bin/bash
-#     - name: Initialize Chezmoi
-#       ansible.builtin.command: "{{ linuxbrew_path }}/chezmoi init --apply https://github.com/{{ github_username }}/dotfiles.git"
-#       environment: 
-#         HOME: "/home/{{ user }}"
-#       args:
-#         executable: /bin/bash
-
-
-- name: Basic usage
-  ansible.builtin.debug:
-    msg: "'{{ lookup('ansible.builtin.env', 'XDG_SESSION_TYPE') }}' is the HOME environment variable."
