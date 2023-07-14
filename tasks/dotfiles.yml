@@ -1,0 +1,28 @@
+#Installing [Chezmoi](https://www.chezmoi.io/)
+- name: Install & Initialize Chezmoi
+  block:
+    - name: Install Chezmoi
+      ansible.builtin.command: "{{ linuxbrew_executable }} install chezmoi"
+      environment: 
+        HOME: "/home/{{ user }}"
+      args:
+        executable: /bin/bash
+    - name: Initialize Chezmoi
+      ansible.builtin.command: "{{ linuxbrew_path }}/chezmoi init --apply https://github.com/{{ github_username }}/dotfiles.git"
+      environment: 
+        HOME: "/home/{{ user }}"
+      args:
+        executable: /bin/bash
+
+- name: Configure gnome-terminal
+  block:
+    - name: Copy dconf settings
+      ansible.builtin.copy:
+        src: gnome-terminal.conf
+        dest: /tmp/gnome-terminal.conf
+    - name: Apply dconf
+      ansible.builtin.shell: dconf load /org/gnome/terminal/ < /tmp/gnome-terminal.conf
+      environment:
+        HOME:  "/home/{{ user }}"
+      args:
+        executable: /bin/bash

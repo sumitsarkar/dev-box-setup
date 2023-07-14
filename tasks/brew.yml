@@ -19,3 +19,4 @@
 - name: Set LinuxBrew Executable Path
   ansible.builtin.set_fact:
     linuxbrew_executable: /home/linuxbrew/.linuxbrew/bin/brew
+    linuxbrew_path: /home/linuxbrew/.linuxbrew/bin

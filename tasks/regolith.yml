@@ -19,4 +19,10 @@
       - regolith-desktop
       - regolith-compositor-picom-glx
       - regolith-look-blackhole
+      - regolith-look-default
+      - i3xrocks-focused-window-name
+      - i3xrocks-rofication
+      - i3xrocks-info
+      - i3xrocks-app-launcher
+      - i3xrocks-memory
     state: present

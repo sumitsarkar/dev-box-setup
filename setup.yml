@@ -7,9 +7,18 @@
 
   tasks:
     - ansible.builtin.import_tasks: tasks/packages.yml
+      when: lookup('ansible.builtin.env', 'XDG_SESSION_TYPE') != "x11"
     - ansible.builtin.import_tasks: tasks/fonts.yml
+      when: lookup('ansible.builtin.env', 'XDG_SESSION_TYPE') != "x11"
     - ansible.builtin.import_tasks: tasks/brew.yml
     - ansible.builtin.import_tasks: tasks/shell.yml
+      when: lookup('ansible.builtin.env', 'XDG_SESSION_TYPE') != "x11"
     - ansible.builtin.import_tasks: tasks/regolith.yml
+      when: lookup('ansible.builtin.env', 'XDG_SESSION_TYPE') != "x11"
     - ansible.builtin.import_tasks: tasks/chrome.yml
+      when: lookup('ansible.builtin.env', 'XDG_SESSION_TYPE') != "x11"
     - ansible.builtin.import_tasks: tasks/programming.yml
+      when: lookup('ansible.builtin.env', 'XDG_SESSION_TYPE') != "x11"
+    - name: Copy dot files
+      ansible.builtin.include_tasks: tasks/dotfiles.yml
+      when: lookup('ansible.builtin.env', 'XDG_SESSION_TYPE') == "x11"

@@ -1,13 +1,13 @@
 ---
 - name: Download & Install Chrome
   block:
-    - name: Download
+    - name: Download Chrome
       ansible.builtin.get_url:
         url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         dest: /tmp/google-chrome-stable_current_amd64.deb
         mode: "775"
 
-    - name: Install
+    - name: Install Chrome
       become: true
       ansible.builtin.apt:
         deb: /tmp/google-chrome-stable_current_amd64.deb
